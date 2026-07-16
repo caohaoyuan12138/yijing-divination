@@ -156,8 +156,25 @@ export function useDivinationGame() {
     });
   }, []);
 
-  // AI 解读回调
-  const handleAiUpdate = useCallback((reading: string) => setAiReading(reading), []);
+  // AI 解读回调 — 直接保存到 localStorage，确保数据不丢失
+  const handleAiUpdate = useCallback((reading: string) => {
+    setAiReading(reading);
+    // 立即保存到 localStorage（不依赖 useEffect 异步触发）
+    if (savedRef.current && reading) {
+      try {
+        const saved = localStorage.getItem('yijing-history');
+        if (saved) {
+          const history = JSON.parse(saved);
+          if (history.length > 0) {
+            history[0].aiReading = reading;
+            localStorage.setItem('yijing-history', JSON.stringify(history));
+          }
+        }
+      } catch (e) {
+        // ignore parse errors
+      }
+    }
+  }, []);
   const handleSearchUpdate = useCallback((results: any[]) => setSearchResults(results), []);
 
   // 单爻动画
