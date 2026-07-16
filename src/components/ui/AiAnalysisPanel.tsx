@@ -184,7 +184,6 @@ ${result.original.yaoLines.map((y, i) => `${['初','二','三','四','五','上'
       if (needsClientAuth() && AI_API_KEY) {
         requestHeaders['Authorization'] = `Bearer ${AI_API_KEY}`;
       }
-      };
 
       // Try proxy path first (works in npm run dev / npm run preview)
       const apiBase = getApiBase();
