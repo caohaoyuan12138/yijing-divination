@@ -1,7 +1,4 @@
 name = "yijing-divination"
 pages_build_output_dir = "dist"
-build_command = "npm run build"
 
-[env.production]
-vars = { AI_API_KEY = "", SEARCH_API_KEY = "" }
-# ⚠️ 实际 API Key 在 Cloudflare Dashboard 的 Pages > Settings > Environment Variables 中设置
+# 环境变量在 Cloudflare Dashboard → Pages → Settings → Environment variables 中设置
