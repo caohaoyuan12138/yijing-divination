@@ -19,7 +19,13 @@ export async function onRequest(context) {
 
   try {
     const body = await request.json();
-    const apiKey = env.AI_API_KEY || 'sk-KufhdOMiyBDKpPjItLWFwmn6rnABQLdv';
+    const apiKey = env.AI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'AI_API_KEY 未配置，请在 Cloudflare Dashboard 设置环境变量' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
+    }
 
     const response = await fetch('https://token.sensenova.cn/v1/chat/completions', {
       method: 'POST',

@@ -18,7 +18,13 @@ export async function onRequest(context) {
 
   try {
     const body = await request.json();
-    const searchApiKey = env.SEARCH_API_KEY || 'as_sk_3bb84be950b3d94301b14206d1e97323';
+    const searchApiKey = env.SEARCH_API_KEY;
+    if (!searchApiKey) {
+      return new Response(JSON.stringify({ error: 'SEARCH_API_KEY 未配置，请在 Cloudflare Dashboard 设置环境变量' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
+    }
 
     const response = await fetch('https://api.anysearch.com/v1/search', {
       method: 'POST',
