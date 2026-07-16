@@ -29,9 +29,9 @@ export async function onRequest(context) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.text();
-    return new Response(data, {
+    return new Response(response.body, {
       status: response.status,
+      statusText: response.statusText,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',

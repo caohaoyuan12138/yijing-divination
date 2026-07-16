@@ -30,33 +30,25 @@ export async function onRequest(context) {
       body: JSON.stringify(body),
     });
 
-    // 流式响应
-    if (response.ok && response.headers.get('content-type')?.includes('text/event-stream')) {
-      const { readable, writable } = new TransformStream();
-      response.body.pipeTo(writable);
-      return new Response(readable, {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Access-Control-Allow-Origin': '*',
-          'X-Accel-Buffering': 'no',
-        },
-      });
-    }
-
-    const data = await response.text();
-    return new Response(data, {
+    // 直接透传响应（含流式）
+    return new Response(response.body, {
       status: response.status,
+      statusText: response.statusText,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': response.headers.get('Content-Type') || 'application/json',
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Expose-Headers': '*',
+        'Cache-Control': 'no-cache',
+        'X-Accel-Buffering': 'no',
       },
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
     });
   }
 }

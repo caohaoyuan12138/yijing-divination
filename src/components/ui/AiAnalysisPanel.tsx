@@ -15,7 +15,14 @@ function isNativePlatform(): boolean {
 
 // API 基础路径
 function getApiBase(): string {
+  // Capacitor 原生模式：如果配置了 server.url（远程加载），走代理路径
+  // 否则走直连（本地开发时使用）
   if (isNativePlatform()) {
+    // 检查是否在远程加载（通过 Capacitor 配置的 server.url）
+    const isRemote = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    if (isRemote) {
+      return '/api/ai';
+    }
     return `${AI_API_BASE}/v1`;
   }
   return '/api/ai';
@@ -23,6 +30,10 @@ function getApiBase(): string {
 
 function getSearchApiBase(): string {
   if (isNativePlatform()) {
+    const isRemote = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    if (isRemote) {
+      return '/api/search';
+    }
     return SEARCH_API_BASE;
   }
   return '/api/search';
