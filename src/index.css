@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-text-primary font-songti;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(194, 59, 34, 0.02) 0%, transparent 50%);
+    /* 防止橡皮筋效果 */
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 安全区域适配 */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-content {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-gold/30 rounded-full;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-8 py-3 bg-gradient-to-r from-gold-dark to-gold text-white
+           font-bold rounded-xl transition-all duration-300
+           hover:from-gold hover:from-gold-light active:shadow-gold
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    background-size: 200% auto;
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.25);
+  }
+
+  .btn-primary:hover {
+    background-position: right center;
+    box-shadow: 0 6px 25px rgba(184, 134, 11, 0.4);
+  }
+
+  .panel {
+    @apply bg-surface/90 backdrop-blur-sm border border-border-light
+           rounded-2xl p-4 shadow-soft;
+    transition: all 0.3s ease;
+  }
+
+  .panel:hover {
+    @apply shadow-gold;
+    border-color: rgba(184, 134, 11, 0.2);
+  }
+
+  .divider {
+    @apply h-px bg-gradient-to-r from-transparent via-border-gold/30 to-transparent;
+  }
+
+  .text-gold-gradient {
+    @apply bg-gradient-to-r from-gold-dark via-gold to-gold-light bg-clip-text text-transparent;
+  }
+
+  .text-section-title {
+    @apply text-text-primary font-bold text-lg mb-3 font-songti tracking-wide;
+  }
+
+  .badge-gold {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+           bg-gold/10 text-gold-dark border border-gold/20;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  /* 底部导航 */
+  .app-nav {
+    @apply safe-area-bottom;
+  }
+
+  /* 应用容器 */
+  .app-container {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

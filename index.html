@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>周易摇卦 · 三枚铜钱 · 六爻成卦 · 趋吉避凶</title>
+    <meta name="description" content="周易摇卦是中国古代占卜术，通过三枚铜钱摇六次得出六爻，本系统集成金钱卦、数字起卦、时间起卦、方位起卦、测字起卦、姓名起卦等多种方式，结合AI智能解读和实时搜索数据，提供专业的周易解卦服务。" />
+    <meta name="keywords" content="周易,摇卦,金钱卦,六爻,占卜,奇门遁甲,六壬神课,梅花易数,太乙神数,解卦,五行,八卦,天干地支" />
+    <meta name="author" content="周易摇卦" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta property="og:title" content="周易摇卦 — 三枚铜钱 · 六爻成卦" />
+    <meta property="og:description" content="中国古代占卜典籍知识库，支持金钱卦、数字起卦、时间起卦、方位起卦、测字起卦、姓名起卦等多种方式" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        var theme = localStorage.getItem('yijing-theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

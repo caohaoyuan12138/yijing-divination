@@ -1,0 +1,33 @@
+{
+  "name": "周易摇卦 — 三枚铜钱 · 六爻成卦",
+  "short_name": "周易摇卦",
+  "description": "中国古代占卜典籍知识库，支持金钱卦、数字起卦、时间起卦、方位起卦、测字起卦、姓名起卦等多种方式",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1a2e",
+  "theme_color": "#b8860b",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/images/shell-static-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/shell-static-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "books"],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

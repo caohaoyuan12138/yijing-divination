@@ -1,0 +1,6 @@
+name = "yijing-divination"
+pages_build_output_dir = "dist"
+
+[env.production]
+vars = { AI_API_KEY = "", SEARCH_API_KEY = "" }
+# ⚠️ 实际 API Key 在 Cloudflare Dashboard 的 Pages > Settings > Environment Variables 中设置
