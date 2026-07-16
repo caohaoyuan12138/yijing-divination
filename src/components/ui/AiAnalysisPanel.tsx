@@ -15,14 +15,9 @@ function isNativePlatform(): boolean {
 
 // API 基础路径
 function getApiBase(): string {
-  // Capacitor 原生模式：如果配置了 server.url（远程加载），走代理路径
-  // 否则走直连（本地开发时使用）
   if (isNativePlatform()) {
-    // 检查是否在远程加载（通过 Capacitor 配置的 server.url）
     const isRemote = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    if (isRemote) {
-      return '/api/ai';
-    }
+    if (isRemote) return '/api/ai';
     return `${AI_API_BASE}/v1`;
   }
   return '/api/ai';
@@ -31,12 +26,16 @@ function getApiBase(): string {
 function getSearchApiBase(): string {
   if (isNativePlatform()) {
     const isRemote = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    if (isRemote) {
-      return '/api/search';
-    }
+    if (isRemote) return '/api/search';
     return SEARCH_API_BASE;
   }
   return '/api/search';
+}
+
+// 是否需要客户端发送 Authorization header（代理模式不需要，Function 会添加）
+function needsClientAuth(): boolean {
+  const apiBase = getApiBase();
+  return apiBase.startsWith('http');
 }
 
 interface ChatMessage {
@@ -179,9 +178,12 @@ ${result.original.yaoLines.map((y, i) => `${['初','二','三','四','五','上'
         max_tokens: 4096,
       };
 
-      const requestHeaders = {
+      const requestHeaders: Record<string, string> = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_API_KEY}`,
+      };
+      if (needsClientAuth() && AI_API_KEY) {
+        requestHeaders['Authorization'] = `Bearer ${AI_API_KEY}`;
+      }
       };
 
       // Try proxy path first (works in npm run dev / npm run preview)
