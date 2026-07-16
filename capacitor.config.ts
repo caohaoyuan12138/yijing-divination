@@ -6,6 +6,8 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https',
+    url: 'https://yijing-divination-9z7.pages.dev',
+    cleartext: false,
   },
   plugins: {
     SplashScreen: {
