@@ -14,4 +14,4 @@ generated-images
 *.apk
 *.zip
 *.keystore
-/android-sdk
+/android-sdk.github/workflows/
