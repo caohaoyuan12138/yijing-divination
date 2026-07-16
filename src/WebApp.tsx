@@ -8,6 +8,8 @@ import DivinationMethodsPanel from '@/components/ui/DivinationMethodsPanel';
 import ClassicReadingPanel from '@/components/ui/ClassicReadingPanel';
 import NotesPanel from '@/components/ui/NotesPanel';
 import FunFeaturesPanel from '@/components/ui/FunFeaturesPanel';
+import HexagramDetailPanel from '@/components/ui/HexagramDetailPanel';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 export default function WebApp() {
   const game = useDivinationGame();
@@ -28,6 +30,7 @@ export default function WebApp() {
         <p className="text-text-muted text-sm font-kaishu tracking-widest">三枚铜钱 · 六爻成卦 · 趋吉避凶</p>
       </header>
       <main className="relative z-10 flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-12">
+        <ErrorBoundary>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
           <div className="lg:col-span-8">
             <div className="panel !p-0 overflow-hidden">
@@ -73,6 +76,11 @@ export default function WebApp() {
               {(() => { const h = game.getInterlockingHexagram(game.castResult.original.yaoLines); if (!h) return null; return <div className="panel overflow-hidden"><h3 className="text-section-title text-center mb-2">🔄 互卦</h3><div className="text-xs text-text-muted text-center mb-1">取二至五爻，揭示内在过程</div><div className="text-center mb-2"><div className="text-4xl mb-1">{game.getHexagramUnicode(h.upperTrigram, h.lowerTrigram)}</div><div className="text-lg font-kaishu font-bold">{h.name}</div></div></div>; })()}
               {(() => { const wrong = game.getWrongHexagram(game.castResult.original.yaoLines); const rev = game.getReverseHexagram(game.castResult.original.yaoLines); if (!wrong || !rev) return null; return <div className="panel overflow-hidden"><h3 className="text-section-title text-center mb-2">🔍 错卦 · 综卦</h3><div className="grid grid-cols-2 gap-3 text-center"><div><div className="text-xs text-text-muted mb-1">错卦</div><div className="text-3xl mb-1">{game.getHexagramUnicode(wrong.upperTrigram, wrong.lowerTrigram)}</div><div className="text-sm font-kaishu font-bold">{wrong.name}</div></div><div><div className="text-xs text-text-muted mb-1">综卦</div><div className="text-3xl mb-1">{game.getHexagramUnicode(rev.upperTrigram, rev.lowerTrigram)}</div><div className="text-sm font-kaishu font-bold">{rev.name}</div></div></div></div>; })()}
               {(() => { const bu = game.getBodyUseAnalysis(game.castResult.original); return <div className="panel overflow-hidden"><h3 className="text-section-title text-center mb-2">⚖️ 体用生克</h3><div className="grid grid-cols-2 gap-3 text-center text-sm mb-2"><div className="p-2 bg-gold/5 rounded-lg"><div className="text-xs text-text-muted">体（下卦）</div><div className="font-bold">{bu.body.trigramName} · {bu.body.wuxing}</div></div><div className="p-2 bg-gold/5 rounded-lg"><div className="text-xs text-text-muted">用（上卦）</div><div className="font-bold">{bu.use.trigramName} · {bu.use.wuxing}</div></div></div><div className="text-center"><span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${bu.relation === '用生体' || bu.relation === '体用比和' ? 'bg-success/10 text-success' : bu.relation === '用克体' ? 'bg-cinnabar/10 text-cinnabar-light' : 'bg-gold/10 text-gold'}`}>{bu.relation}</span></div><div className="mt-2 text-xs text-text-secondary text-center">{bu.interpretation}</div></div>; })()}
+              <HexagramDetailPanel
+                upperTrigram={game.castResult.original.upperTrigram}
+                lowerTrigram={game.castResult.original.lowerTrigram}
+                yaoLines={game.castResult.original.yaoLines}
+              />
             </div>
           </>
         )}
@@ -106,6 +114,7 @@ export default function WebApp() {
             />
           </div>
         )}
+      </ErrorBoundary>
       </main>
     </div>
   );

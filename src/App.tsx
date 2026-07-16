@@ -8,6 +8,8 @@ import DivinationMethodsPanel from '@/components/ui/DivinationMethodsPanel';
 import ClassicReadingPanel from '@/components/ui/ClassicReadingPanel';
 import NotesPanel from '@/components/ui/NotesPanel';
 import FunFeaturesPanel from '@/components/ui/FunFeaturesPanel';
+import HexagramDetailPanel from '@/components/ui/HexagramDetailPanel';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 type TabType = 'divine' | 'history' | 'classics' | 'fun' | 'settings';
 
@@ -411,6 +413,12 @@ export default function App() {
                       </div>
                     );
                   })()}
+
+                  <HexagramDetailPanel
+                    upperTrigram={game.castResult.original.upperTrigram}
+                    lowerTrigram={game.castResult.original.lowerTrigram}
+                    yaoLines={game.castResult.original.yaoLines}
+                  />
                 </div>
 
                 {game.castResult && !game.isAnimating && (
@@ -434,6 +442,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-surface text-text-primary app-container" onKeyDown={handleKeyDown} tabIndex={0}>
+      <ErrorBoundary>
       <header className="app-header relative z-20 text-center py-4 px-4 safe-area-top">
         <h1 className="text-2xl font-bold text-gold-gradient font-songti tracking-[0.1em]">
           周易摇卦
@@ -467,6 +476,7 @@ export default function App() {
           ))}
         </div>
       </nav>
+      </ErrorBoundary>
     </div>
   );
 }
