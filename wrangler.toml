@@ -1,5 +1,6 @@
 name = "yijing-divination"
 pages_build_output_dir = "dist"
+build_command = "npm run build"
 
 [env.production]
 vars = { AI_API_KEY = "", SEARCH_API_KEY = "" }
